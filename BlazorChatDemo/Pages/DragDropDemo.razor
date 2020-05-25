@@ -1,0 +1,37 @@
+﻿@page "/dragdropdemo"
+@using Blazor.DragDrop.Core
+
+<h3>DragDropDemo -  How to use Drag &Aacute; Drop</h3>
+<h1>Blazor Drag and Drop Example !!!</h1>
+
+<div class="col-md-4">
+    <Dropzone>
+        <Draggable>
+            <li class="list-group-item dropList">First Item</li>
+        </Draggable>
+        <Draggable>
+            <li class="list-group-item dropList">Second Item</li>
+        </Draggable>
+        <Draggable>
+            <li class="list-group-item dropList">Third Item</li>
+        </Draggable>
+        <Draggable>
+            <li class="list-group-item dropList">Fourth Item</li>
+        </Draggable>
+    </Dropzone>
+</div>
+
+@code {
+
+}
+
+<style type="text/css">
+    .dropList {
+        border: 1px solid black;
+        background:#900C3F;
+        color:#ffffff;
+        height:150px;
+        font-size:30px;
+        text-align:center;
+    }
+</style>

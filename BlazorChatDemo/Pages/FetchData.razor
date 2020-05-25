@@ -1,0 +1,65 @@
+﻿@page "/fetchdata"
+
+@using BlazorChatDemo.Data
+@inject WeatherForecastService ForecastService
+
+<h1>Weather forecast</h1>
+
+<p>This component demonstrates fetching data from a service.</p>
+
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Temp. (C)</th>
+                <th>Temp. (F)</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var forecast in forecasts)
+            {
+                <ContextMenuTrigger WrapperTag="tr" MenuId="tbContextMenu" Data="forecast">
+                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.TemperatureF</td>
+                    <td>@forecast.Summary</td>
+                </ContextMenuTrigger>
+             }
+        </tbody>
+    </table>
+
+    <ContextMenu Id="tbContextMenu">
+        <Item OnClick="@ReloadClick"><i class="btn btn-info oi oi-action-redo"></i> Reload</Item>
+        <Item OnClick="@DeleteClick"><i class="btn btn-danger oi oi-delete"></i> Delete</Item>
+    </ContextMenu>
+}
+
+@code {
+    private WeatherForecast[] forecasts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+    }
+
+    async Task ReloadClick(ItemClickEventArgs e)
+    {
+        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+    }
+
+    void DeleteClick(ItemClickEventArgs e)
+    {
+        var currentRow = e.Data as WeatherForecast;
+        List<WeatherForecast> list = forecasts.ToList();
+        list.Remove(currentRow);
+        forecasts = list.ToArray();
+    }
+}

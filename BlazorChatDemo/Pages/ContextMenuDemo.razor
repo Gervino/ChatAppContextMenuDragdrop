@@ -1,0 +1,30 @@
+﻿@page "/contextmenu"
+<h3>ContextMenuDemo -  Blazor Context Component | Right click Menu</h3>
+
+<ContextMenu Id="myMenu">
+    <Item OnClick="@OnClick">Menu-1</Item>
+    <Item OnClick="@OnClick" Enabled="false">Menu-2</Item>
+    <Item OnClick="@OnClick">Menu-3</Item>
+    <Seperator></Seperator>
+    <Item>
+        Sub Menu
+        <SubMenu>
+            <Item OnClick="@OnClick">Sub Menu-1</Item>
+            <Item OnClick="@OnClick">Sub Menu-2</Item>
+        </SubMenu>
+    </Item>
+</ContextMenu>
+
+<ContextMenuTrigger MenuId="myMenu">
+    <p>Right Click on me to show the context menu !!!</p>
+</ContextMenuTrigger>
+
+<label>@text</label>
+
+@code {
+    string text;
+    void OnClick(ItemClickEventArgs e)
+    {
+        text = $"Item Clicked => Menu: {e.MenuItem}, MenuTarget: {e.ContextMenuTargetId}, MenuId: {e.ContextMenuId}";
+    }
+}
